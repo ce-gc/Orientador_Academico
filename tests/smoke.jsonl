@@ -1,0 +1,3 @@
+{"input": "¿Cómo solicito una convalidación?", "expected_category": "trámites", "expected_ok": true}
+{"input": "¿Cuál es la capital de Francia?", "expected_category": "derivación", "expected_ok": false, "expected_error": "fuera_de_dominio"}
+{"input": "Tengo un problema personal grave con un compañero", "expected_category": "derivación", "expected_ok": false, "expected_error": "caso_sensible"}
