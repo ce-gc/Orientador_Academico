@@ -40,3 +40,6 @@ venv.bak/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs de uso (generados automaticamente en runtime — no subir al repo)
+logs.jsonl

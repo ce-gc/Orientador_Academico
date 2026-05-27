@@ -30,25 +30,42 @@ El asistente resuelve dudas de alumnos sobre normativa, plazos, plataformas y co
 ### 1. Instalar Dependencias
 Instala los paquetes de Python necesarios:
 ```powershell
-pip install fastapi uvicorn requests gradio python-dotenv
+pip install fastapi uvicorn requests gradio python-dotenv openai
 ```
 
-### 2. Configurar Variables de Entorno (Opcional para Azure)
-Crea un archivo `.env` en la carpeta raíz si deseas conectar con Azure OpenAI:
+### 2. Configurar Variables de Entorno
+Crea un archivo `.env` en la carpeta raíz del proyecto (nunca lo subas al repo):
 ```env
+# Proveedor activo: "azure" para DeepSeek Foundry, "mock" para simulación local
 PROVIDER=azure
-AZURE_OPENAI_API_KEY=tu-clave-api-aqui
-AZURE_OPENAI_ENDPOINT=https://tu-recurso.openai.azure.com/
-AZURE_OPENAI_DEPLOYMENT_NAME=nombre-de-tu-despliegue
-AZURE_OPENAI_API_VERSION=2024-02-15-preview
+
+# Azure AI Foundry (DeepSeek-V4-Flash)
+AZURE_OPENAI_ENDPOINT=https://cursoai-resource.services.ai.azure.com
+AZURE_OPENAI_BASE_URL=https://cursoai-resource.services.ai.azure.com/openai/v1
+AZURE_OPENAI_DEPLOYMENT_NAME=DeepSeek-V4-Flash
+AZURE_OPENAI_API_KEY=TU_CLAVE_AQUI   # <-- secreto, no subir al repo
+
+# Identificador de grupo para los logs de uso
+GROUP_ID=G1
 ```
-*Si no configuras las credenciales de Azure o dejas el archivo `.env` vacío, el backend iniciará automáticamente en modo **Mock**.*
+> **Nota:** Si `PROVIDER` no está definido, el backend autodetecta el modo:
+> si existe `AZURE_OPENAI_API_KEY` usa Foundry; si no, usa Mock.
 
 ### 3. Ejecutar el Servidor (Backend)
-Desde una terminal en el directorio raíz de la aplicación, ejecuta:
+Desde una terminal en el directorio raíz, ejecuta **uno** de estos comandos:
+
 ```powershell
-# Usando motor Mock (por defecto)
+# Modo Mock (sin API key, respuestas simuladas)
 $env:PROVIDER="mock"; uvicorn backend.server:app --host 127.0.0.1 --port 8000 --reload
+
+# Modo Foundry (DeepSeek real — requiere API key en .env)
+uvicorn backend.server:app --host 127.0.0.1 --port 8000 --reload
+```
+
+Verifica que el backend está activo:
+```powershell
+curl http://127.0.0.1:8000/health
+# Respuesta esperada: {"status": "ok", "provider": "azure-openai" | "mock", ...}
 ```
 
 ### 4. Ejecutar la Interfaz (Frontend UI)
@@ -59,12 +76,39 @@ python ui/app.py
 Accede a la interfaz en tu navegador: [http://127.0.0.1:7860](http://127.0.0.1:7860)
 
 ### 5. Probar con el Script de Test
-Con el backend en ejecución, puedes correr las pruebas automáticas en una tercera terminal:
+Con el backend en ejecución, ejecuta las pruebas automáticas:
 ```powershell
 python tests/client.py
 ```
 
 ---
+
+## 📊 Logs de Uso (Tracking obligatorio P12-S2)
+
+Cada llamada real al modelo DeepSeek genera automáticamente una línea en **`logs.jsonl`** (en la raíz del proyecto).
+
+### Campos por entrada de log
+
+| Campo | Descripción |
+| :--- | :--- |
+| `ts` | Fecha y hora ISO de la llamada |
+| `group_id` | Identificador de grupo (G1..G6) |
+| `exercise_id` | Identificador del ejercicio (`P12-S2`) |
+| `request_id` | UUID único por llamada |
+| `deployment` | Nombre del modelo (`DeepSeek-V4-Flash`) |
+| `prompt_tokens` | Tokens del prompt enviado |
+| `completion_tokens` | Tokens de la respuesta generada |
+| `total_tokens` | Total de tokens consumidos |
+| `latency_ms` | Tiempo total de la llamada en milisegundos |
+
+### Ejemplo de línea en `logs.jsonl`
+
+```json
+{"ts": "2026-05-27T17:30:00+0200", "group_id": "G1", "exercise_id": "P12-S2", "request_id": "a1b2c3d4-...", "deployment": "DeepSeek-V4-Flash", "prompt_tokens": 312, "completion_tokens": 87, "total_tokens": 399, "latency_ms": 1240}
+```
+
+> **Nota:** El archivo `logs.jsonl` está en `.gitignore` — no se sube al repositorio.
+> En modo Mock no se generan logs (tokens = 0).
 
 ## 📊 Evidencias de Ejecución (Smoke Tests)
 
