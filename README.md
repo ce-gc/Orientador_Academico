@@ -11,8 +11,8 @@ El asistente resuelve dudas de alumnos sobre normativa, plazos, plataformas y co
 ```
 ├── backend/
 │   ├── server.py             # Servidor FastAPI (POST /predict y GET /health)
-│   ├── engine_mock.py        # Motor simulado con respuestas realistas de prueba
-│   └── engine_azure.py       # Motor que conecta directamente con Azure OpenAI
+│   ├── engine_mock.py        # Motor simulado (Plan B — sin API key)
+│   └── engine_azure.py       # Motor Azure AI Foundry con DeepSeek (Plan A)
 ├── ui/
 │   └── app.py                # Cliente de usuario con interfaz de Gradio
 ├── tests/
@@ -36,37 +36,62 @@ pip install fastapi uvicorn requests gradio python-dotenv openai
 ### 2. Configurar Variables de Entorno
 Crea un archivo `.env` en la carpeta raíz del proyecto (nunca lo subas al repo):
 ```env
-# Proveedor activo: "azure" para DeepSeek Foundry, "mock" para simulación local
-PROVIDER=azure
+# Proveedor activo:
+#   foundry -> DeepSeek en Azure AI Foundry (requiere AZURE_OPENAI_API_KEY)
+#   mock    -> simulacion local sin API key
+PROVIDER=foundry
 
-# Azure AI Foundry (DeepSeek-V4-Flash)
+# Azure AI Foundry (DeepSeek-V4-Flash) — valores exactos del profesor
 AZURE_OPENAI_ENDPOINT=https://cursoai-resource.services.ai.azure.com
 AZURE_OPENAI_BASE_URL=https://cursoai-resource.services.ai.azure.com/openai/v1
 AZURE_OPENAI_DEPLOYMENT_NAME=DeepSeek-V4-Flash
-AZURE_OPENAI_API_KEY=TU_CLAVE_AQUI   # <-- secreto, no subir al repo
+AZURE_OPENAI_API_KEY=TU_CLAVE_AQUI   # <-- secreto, NO subir al repo
 
-# Identificador de grupo para los logs de uso
+# Identificador de grupo para los logs de uso (G1..G6)
 GROUP_ID=G1
 ```
-> **Nota:** Si `PROVIDER` no está definido, el backend autodetecta el modo:
-> si existe `AZURE_OPENAI_API_KEY` usa Foundry; si no, usa Mock.
+> **Nota:** Si `PROVIDER` no esta definido, el backend autodetecta:
+> si existe `AZURE_OPENAI_API_KEY` usa `foundry`; si no, usa `mock`.
 
 ### 3. Ejecutar el Servidor (Backend)
 Desde una terminal en el directorio raíz, ejecuta **uno** de estos comandos:
 
 ```powershell
-# Modo Mock (sin API key, respuestas simuladas)
+# Plan B: Modo Mock (sin API key, para desarrollo y demos)
 $env:PROVIDER="mock"; uvicorn backend.server:app --host 127.0.0.1 --port 8000 --reload
 
-# Modo Foundry (DeepSeek real — requiere API key en .env)
+# Plan A: Modo Foundry/DeepSeek (requiere API key en .env)
+# PROVIDER=foundry ya esta configurado en .env, solo lanza:
 uvicorn backend.server:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Verifica que el backend está activo:
+Verifica que el backend esta activo:
 ```powershell
 curl http://127.0.0.1:8000/health
-# Respuesta esperada: {"status": "ok", "provider": "azure-openai" | "mock", ...}
+# Modo mock:    {"status": "ok", "provider": "mock", "azure_configured": false}
+# Modo foundry: {"status": "ok", "provider": "foundry", "azure_configured": true}
 ```
+
+### Smoke test rapido para Foundry (cuando tengas la API key)
+
+Este comando verifica la conexion directa con DeepSeek sin necesitar la UI:
+```powershell
+python -c "
+import os; from dotenv import load_dotenv; load_dotenv()
+from openai import OpenAI
+client = OpenAI(
+    base_url=os.environ['AZURE_OPENAI_BASE_URL'],
+    api_key=os.environ['AZURE_OPENAI_API_KEY'],
+    default_headers={'api-key': os.environ['AZURE_OPENAI_API_KEY']},
+)
+resp = client.chat.completions.create(
+    model=os.environ['AZURE_OPENAI_DEPLOYMENT_NAME'],
+    messages=[{'role': 'user', 'content': 'Di hola en una frase.'}],
+    max_tokens=50, temperature=0.2,
+)
+print('RESPUESTA:', resp.choices[0].message.content)
+print('USAGE:', resp.usage)
+"
 
 ### 4. Ejecutar la Interfaz (Frontend UI)
 En otra terminal diferente, ejecuta:
