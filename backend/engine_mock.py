@@ -2,6 +2,9 @@
 """
 Motor Mock para el Asistente Académico (Sesión 2).
 Simula respuestas realistas basadas en las 10 preguntas de prueba del proyecto.
+
+Devuelve el mismo formato que engine_azure.py:
+  { "output": {...}, "meta": { "provider": "mock", tokens: 0, ... } }
 """
 
 import time
@@ -94,29 +97,53 @@ MOCK_DATABASE = [
 def predict(text: str, options: dict | None = None) -> dict:
     """
     Simula la inferencia del asistente académico.
+
+    Devuelve el mismo contrato que engine_azure.predict():
+      {
+        "output": { ok, answer, category, confidence, error },
+        "meta":   { provider, deployment, latency_ms,
+                    prompt_tokens, completion_tokens, total_tokens, request_id }
+      }
     """
     # Latencia simulada realista
     time.sleep(0.4)
-    
+
     text_lower = text.lower()
-    
-    # Intentar buscar coincidencia
+
+    # Meta fija del mock (sin tokens reales, sin deployment real)
+    _meta = {
+        "provider": "mock",
+        "deployment": None,
+        "latency_ms": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "request_id": None,
+    }
+
+    # Intentar buscar coincidencia en la base de datos mock
     for item in MOCK_DATABASE:
         for pattern in item["keywords"]:
             if re.search(pattern, text_lower):
                 return {
-                    "ok": item["ok"],
-                    "answer": item["answer"],
-                    "category": item["category"],
-                    "confidence": item["confidence"],
-                    "error": item["error"]
+                    "output": {
+                        "ok":         item["ok"],
+                        "answer":     item["answer"],
+                        "category":   item["category"],
+                        "confidence": item["confidence"],
+                        "error":      item["error"],
+                    },
+                    "meta": _meta,
                 }
-                
+
     # Respuesta por defecto para casos desconocidos
     return {
-        "ok": False,
-        "answer": "No he podido encontrar una respuesta precisa a tu consulta académica. Por favor, ponte en contacto directo con Secretaría o consulta a tu tutor.",
-        "category": "derivación",
-        "confidence": 0.25,
-        "error": "fuera_de_dominio"
+        "output": {
+            "ok":         False,
+            "answer":     "No he podido encontrar una respuesta precisa a tu consulta académica. Por favor, ponte en contacto directo con Secretaría o consulta a tu tutor.",
+            "category":   "derivación",
+            "confidence": 0.25,
+            "error":      "fuera_de_dominio",
+        },
+        "meta": _meta,
     }
