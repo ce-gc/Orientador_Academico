@@ -6,7 +6,6 @@ Implementa GET /health y POST /predict con el contrato de la Práctica 12.
 
 import os
 import sys
-import time
 from typing import Any, Dict, Optional
 
 # Agregar el directorio de este script a sys.path para resolver importaciones locales
@@ -49,7 +48,8 @@ app = FastAPI(
 
 class PredictOptions(BaseModel):
     temperature: Optional[float] = Field(default=0.2, ge=0.0, le=2.0)
-    max_tokens: Optional[int] = Field(default=256, ge=1, le=2048)
+    # Hard limit de 600 tokens fijado por el profesor (P12-S2)
+    max_tokens: Optional[int] = Field(default=256, ge=1, le=600)
 
 class PredictIn(BaseModel):
     input: str
@@ -102,26 +102,29 @@ def health():
 
 @app.post("/predict", summary="Predicción del Asistente Académico.")
 def predict(body: PredictIn):
-    t0 = time.time()
-    
+    """
+    Contrato de respuesta OK:
+      { "ok": true, "output": {...}, "meta": { "provider", "deployment",
+        "latency_ms", "prompt_tokens", "completion_tokens",
+        "total_tokens", "request_id" } }
+
+    Contrato de respuesta ERROR:
+      { "ok": false, "error": { "code", "message", "details" } }
+    """
     try:
-        # Ejecutar inferencia en el motor correspondiente
-        output_data = _engine_predict(
+        # El engine devuelve { "output": {...}, "meta": {...} }
+        # con latency, tokens y request_id ya calculados.
+        result = _engine_predict(
             text=body.input,
             options=body.options.model_dump() if body.options else None
         )
-        
-        latency = int((time.time() - t0) * 1000)
-        
+
         return {
             "ok": True,
-            "output": output_data,
-            "meta": {
-                "model": _PROVIDER_DISPLAY,
-                "latency_ms": latency
-            }
+            "output": result["output"],
+            "meta":   result["meta"],
         }
-        
+
     except AzureEngineError as exc:
         return JSONResponse(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -129,9 +132,9 @@ def predict(body: PredictIn):
                 "ok": False,
                 "error": {
                     "code": "MODEL_ERROR",
-                    "message": f"El motor de Azure OpenAI reportó un error: {exc}",
+                    "message": f"El motor de Azure AI Foundry reportó un error: {exc}",
                     "details": {
-                        "provider": "azure"
+                        "provider": _PROVIDER_DISPLAY
                     }
                 }
             }
