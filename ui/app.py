@@ -6,6 +6,7 @@ Conecta con el backend en http://127.0.0.1:8000/predict.
 
 import os
 import requests
+import json
 import gradio as gr
 
 # Configuración
@@ -50,18 +51,7 @@ def ask_assistant(question: str, temperature: float, max_tokens: float) -> tuple
 
                 # Extraer meta: tokens y proveedor
                 meta = data.get("meta", {})
-                provider   = meta.get("provider", "?")
-                deployment = meta.get("deployment") or "mock"
-                p_tok = meta.get("prompt_tokens", 0)
-                c_tok = meta.get("completion_tokens", 0)
-                t_tok = meta.get("total_tokens", 0)
-                lat   = meta.get("latency_ms", 0)
-                rid   = meta.get("request_id") or "(mock)"
-                meta_info = (
-                    f"Proveedor: {provider} | Modelo: {deployment}\n"
-                    f"Tokens → prompt: {p_tok} | completion: {c_tok} | total: {t_tok}\n"
-                    f"Latencia: {lat} ms | request_id: {rid}"
-                )
+                meta_info = json.dumps(meta, indent=2, ensure_ascii=False)
 
                 return answer, category, confidence, "", meta_info
             else:
@@ -111,11 +101,9 @@ custom_css = """
 }
 .title-box {
     text-align: center;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    color: #1e3c72;
 }
 .title-box h1 {
     margin: 0;
@@ -124,7 +112,7 @@ custom_css = """
 }
 .title-box p {
     margin: 0.5rem 0 0 0;
-    opacity: 0.9;
+    color: #4a5568;
     font-size: 1.1rem;
 }
 """
@@ -204,7 +192,7 @@ with gr.Blocks(title="Asistente Académico Inteligente", css=custom_css) as demo
             txt_meta = gr.Textbox(
                 label="Uso / Meta (proveedor, tokens, latencia)",
                 interactive=False,
-                lines=3,
+                lines=8,
                 placeholder="Aqui apareceran los tokens consumidos y el proveedor activo."
             )
 

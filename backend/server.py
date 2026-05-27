@@ -13,6 +13,12 @@ _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if _SCRIPT_DIR not in sys.path:
     sys.path.insert(0, _SCRIPT_DIR)
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -21,7 +27,7 @@ from pydantic import BaseModel, Field, field_validator
 # Configuración del proveedor
 # Valores válidos: "foundry" (DeepSeek en Azure AI Foundry) | "mock" (simulación local)
 # "azure" se acepta como alias de "foundry" por compatibilidad.
-_PROVIDER_NAME = os.getenv("PROVIDER", "").strip().lower()
+_PROVIDER_NAME = os.getenv("LLM_PROVIDER", os.getenv("PROVIDER", "")).strip().lower()
 
 # Autodetectar proveedor si no está definido
 if not _PROVIDER_NAME:
