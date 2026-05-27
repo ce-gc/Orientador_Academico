@@ -19,18 +19,20 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 
 # Configuración del proveedor
+# Valores válidos: "foundry" (DeepSeek en Azure AI Foundry) | "mock" (simulación local)
+# "azure" se acepta como alias de "foundry" por compatibilidad.
 _PROVIDER_NAME = os.getenv("PROVIDER", "").strip().lower()
 
 # Autodetectar proveedor si no está definido
 if not _PROVIDER_NAME:
     if os.getenv("AZURE_OPENAI_API_KEY"):
-        _PROVIDER_NAME = "azure"
+        _PROVIDER_NAME = "foundry"
     else:
         _PROVIDER_NAME = "mock"
 
-if _PROVIDER_NAME == "azure":
+if _PROVIDER_NAME in ("foundry", "azure"):   # "azure" aceptado como alias
     from engine_azure import predict as _engine_predict, AzureEngineError
-    _PROVIDER_DISPLAY = "azure-openai"
+    _PROVIDER_DISPLAY = "foundry"             # Consistente con meta.provider del engine
 else:
     from engine_mock import predict as _engine_predict
     # Definimos la excepción vacía por consistencia
