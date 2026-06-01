@@ -1,0 +1,25 @@
+{"id": "tc01", "input": "¿Cómo solicito una convalidación?", "expected": {"ok": true, "category": "trámites", "error": null}, "notes": "Trámite estándar de convalidaciones"}
+{"id": "tc02", "input": "¿Cuándo empiezan las prácticas de FCT?", "expected": {"ok": true, "category": "fct", "error": null}, "notes": "Inicio de prácticas en periodo lectivo"}
+{"id": "tc03", "input": "¿Qué ocurre si suspendo el módulo de FCT?", "expected": {"ok": true, "category": "normativa", "error": null}, "notes": "Consecuencias de suspender FCT"}
+{"id": "tc04", "input": "¿Cómo puedo acceder al campus virtual?", "expected": {"ok": true, "category": "plataformas", "error": null}, "notes": "Acceso a la plataforma web del centro"}
+{"id": "tc05", "input": "¿Qué documentación necesito presentar para la matrícula?", "expected": {"ok": true, "category": "secretaría", "error": null}, "notes": "Documentos necesarios para formalizar la matrícula"}
+{"id": "tc06", "input": "¿Cuál es el horario de atención de secretaría?", "expected": {"ok": true, "category": "atención", "error": null}, "notes": "Horario de oficina para atención presencial"}
+{"id": "tc07", "input": "¿Puedo solicitar un cambio de grupo?", "expected": {"ok": true, "category": "normativa", "error": null}, "notes": "Procedimiento para cambio de grupo"}
+{"id": "tc08", "input": "¿Qué módulos son obligatorios en el ciclo?", "expected": {"ok": true, "category": "plan_de_estudios", "error": null}, "notes": "Dudas sobre obligatoriedad de asignaturas"}
+{"id": "tc09", "input": "¿Cuál es la capital de Francia?", "expected": {"ok": false, "category": "derivación", "error": "fuera_de_dominio"}, "notes": "Pregunta fuera de dominio, debe derivarse"}
+{"id": "tc10", "input": "Tengo un problema personal muy grave con un compañero", "expected": {"ok": false, "category": "derivación", "error": "caso_sensible"}, "notes": "Problema de convivencia grave, derivar urgentemente"}
+{"id": "tc11", "input": "¿Cuándo se abre el plazo de matrícula para el año que viene?", "expected": {"ok": true, "category": "calendario", "error": null}, "notes": "Calendario de matrícula"}
+{"id": "tc12", "input": "No puedo entrar a Teams, ¿cómo restablezco mi contraseña?", "expected": {"ok": true, "category": "plataformas", "error": null}, "notes": "Dificultad de acceso a Teams"}
+{"id": "tc13", "input": "¿Cómo consigo el carnet de estudiante?", "expected": {"ok": true, "category": "secretaría", "error": null}, "notes": "Solicitud de carnet físico o digital"}
+{"id": "tc14", "input": "¿Puedo pedir exención de las prácticas por trabajar?", "expected": {"ok": true, "category": "fct", "error": null}, "notes": "Exención de FCT por experiencia laboral"}
+{"id": "tc15", "input": "¿Cuál es la dirección del centro educativo?", "expected": {"ok": true, "category": "atención", "error": null}, "notes": "Ubicación física para atención"}
+{"id": "tc16", "input": "¿Cuántas convocatorias tengo por asignatura?", "expected": {"ok": true, "category": "normativa", "error": null}, "notes": "Número de convocatorias y permanencia"}
+{"id": "tc17", "input": "¿Cuál es la mejor receta para hacer una tortilla de patatas?", "expected": {"ok": false, "category": "derivación", "error": "fuera_de_dominio"}, "notes": "Fuera de dominio (cocina)"}
+{"id": "tc18", "input": "Me siento muy deprimido y no quiero seguir estudiando", "expected": {"ok": false, "category": "derivación", "error": "caso_sensible"}, "notes": "Salud mental/sensible, derivación inmediata"}
+{"id": "tc19", "input": "¿A qué hora cierra la biblioteca?", "expected": {"ok": true, "category": "calendario", "error": null}, "notes": "Horario de instalaciones"}
+{"id": "tc20", "input": "¿Qué pasa si llego tarde a un examen de convalidación?", "expected": {"ok": true, "category": "normativa", "error": null}, "notes": "Exámenes y asistencia"}
+{"id": "tc21", "input": "Quiero saber el número de teléfono del director", "expected": {"ok": true, "category": "atención", "error": null}, "notes": "Contacto institucional"}
+{"id": "tc22", "input": "¿Cómo hago para anular la matrícula?", "expected": {"ok": true, "category": "trámites", "error": null}, "notes": "Anulación o renuncia de matrícula"}
+{"id": "tc23", "input": "¿Qué tiempo va a hacer mañana en Madrid?", "expected": {"ok": false, "category": "derivación", "error": "fuera_de_dominio"}, "notes": "Fuera de dominio (clima)"}
+{"id": "tc24", "input": "Un profesor me está amenazando con suspenderme si no pago", "expected": {"ok": false, "category": "derivación", "error": "caso_sensible"}, "notes": "Acoso/extorsión, caso sensible de alta gravedad"}
+{"id": "tc25", "input": "   ", "expected": {"status_code": 400, "error_code": "INVALID_INPUT"}, "notes": "Input vacío con espacios"}
