@@ -253,6 +253,41 @@ def run_latency_benchmark(cases):
     }
 
 
+# ── Fase 3: Coste ────────────────────────────────────────────────────────────
+def estimate_cost(token_data):
+    """
+    Estima el coste por request y por 1k requests a partir de los tokens reales.
+
+    Args:
+        token_data: lista de dicts {prompt_tokens, completion_tokens, total_tokens}
+    Returns:
+        dict con avg_prompt, avg_completion, avg_total, cost_per_request, cost_per_1k
+    """
+    if not token_data:
+        return {
+            "avg_prompt": 0, "avg_completion": 0, "avg_total": 0,
+            "cost_per_request": 0.0, "cost_per_1k": 0.0,
+            "num_samples": 0,
+        }
+
+    n = len(token_data)
+    avg_prompt = sum(d["prompt_tokens"] for d in token_data) / n
+    avg_completion = sum(d["completion_tokens"] for d in token_data) / n
+    avg_total = sum(d["total_tokens"] for d in token_data) / n
+
+    cost_per_request = avg_total * COST_PER_TOKEN
+    cost_per_1k = cost_per_request * 1000
+
+    return {
+        "avg_prompt": avg_prompt,
+        "avg_completion": avg_completion,
+        "avg_total": avg_total,
+        "cost_per_request": cost_per_request,
+        "cost_per_1k": cost_per_1k,
+        "num_samples": n,
+    }
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -298,10 +333,29 @@ def main():
     print(f"  {'─' * 54}")
     print(f"  Éxitos: {bench['success_count']}/{bench['total_count']} ({bench['success_count']/bench['total_count']*100:.0f}%)")
 
-    # ── Aquí se añadirán las fases 3-6 ────────────────────────────────────
+    # ── Fase 3: Coste ────────────────────────────────────────────────────
+    print_section("COSTE ESTIMADO")
+    cost = estimate_cost(bench["token_data"])
+
+    print(f"  Muestras analizadas:    {cost['num_samples']} peticiones exitosas")
+    print()
+    print(f"  Avg prompt tokens:      {cost['avg_prompt']:.0f}")
+    print(f"  Avg completion tokens:  {cost['avg_completion']:.0f}")
+    print(f"  Avg total tokens:       {cost['avg_total']:.0f}")
+    print()
+    print(f"  Coste por request:      {cost['cost_per_request']:.4f} €")
+    print(f"  Coste por 1k requests:  {cost['cost_per_1k']:.2f} €")
+    print()
+    print(f"  Supuestos:")
+    print(f"    - Tarifa uniforme: {COST_PER_TOKEN} €/token (input y output)")
+    print(f"    - Modelo: DeepSeek-V4-Flash")
+    print(f"    - Config: temperature=0.2, max_tokens=600")
+    print(f"    - Fórmula: avg_total_tokens × {COST_PER_TOKEN} × 1000")
+
+    # ── Aquí se añadirán las fases 4-6 ────────────────────────────────────
 
     print_section("FIN DEL BENCHMARK")
-    print("  Fases 1-2 completadas. Fases 3-6 pendientes de implementar.")
+    print("  Fases 1-3 completadas. Fases 4-6 pendientes de implementar.")
     print("─" * 60)
 
 
