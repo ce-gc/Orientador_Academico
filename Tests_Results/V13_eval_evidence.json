@@ -11,23 +11,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Para solicitar una convalidación debes presentar el formulario de solicitud en Secretaría junto con tu certificación académica oficial original de los estudios cursados.",
+        "answer": "Para solicitar una convalidación, debes presentar la solicitud en Secretaría durante el plazo establecido en el calendario académico. Necesitarás el certificado académico de los estudios previos y el programa detallado de las asignaturas cursadas. Puedes consultar el procedimiento completo en la normativa de convalidaciones disponible en la plataforma.",
         "category": "trámites",
         "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 3350,
+        "prompt_tokens": 488,
+        "completion_tokens": 118,
+        "total_tokens": 606,
+        "request_id": "5db871fd-e2cc-445e-b549-6a51f913f0ee"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
+    "latency_ms": 3684,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -49,23 +49,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Las prácticas de FCT comienzan oficialmente el 1 de octubre para el primer periodo y el 1 de marzo para el segundo periodo lectivo. Además, se puede solicitar la exención de la FCT si se acredita un año de experiencia laboral afín.",
+        "answer": "Las prácticas de FCT suelen comenzar en marzo, según el calendario académico del centro. Te recomiendo consultar la fecha exacta en la secretaría o en la plataforma educativa.",
         "category": "fct",
-        "confidence": 0.94,
+        "confidence": 0.9,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1559,
+        "prompt_tokens": 492,
+        "completion_tokens": 79,
+        "total_tokens": 571,
+        "request_id": "efb96561-9130-48b4-945f-a4b21af66d42"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
+    "latency_ms": 1889,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -87,30 +87,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Si suspendes el módulo de FCT, dispondrás de una convocatoria extraordinaria para repetirlo en el siguiente período de prácticas establecido por el centro.",
-        "category": "normativa",
-        "confidence": 0.9,
+        "answer": "Si suspendes el módulo de FCT, deberás repetirlo en el siguiente periodo de prácticas. Es necesario contactar con el departamento de FCT para acordar nuevas fechas y condiciones.",
+        "category": "fct",
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2365,
+        "prompt_tokens": 493,
+        "completion_tokens": 79,
+        "total_tokens": 572,
+        "request_id": "df51a631-9e36-435d-9926-631afc2fab95"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
-    "metric_score": 1.0,
+    "latency_ms": 2718,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: normativa, obtuvo: fct)"
+    ],
     "notes": "Consecuencias de suspender FCT"
   },
   {
@@ -125,23 +127,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Puedes acceder al campus virtual o Teams utilizando las credenciales corporativas (usuario y contraseña) enviadas a tu correo electrónico al matricularte. Si tienes problemas de acceso, puedes restablecer tu contraseña en el portal de autoservicio.",
+        "answer": "Para acceder al campus virtual, debes ingresar a la plataforma oficial del centro con tu usuario y contraseña proporcionados en la matrícula. Si tienes problemas, contacta con secretaría.",
         "category": "plataformas",
-        "confidence": 0.93,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1731,
+        "prompt_tokens": 489,
+        "completion_tokens": 83,
+        "total_tokens": 572,
+        "request_id": "238780ee-5ffa-4416-85f6-8e848dd7505e"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
+    "latency_ms": 2066,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -163,30 +165,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Para formalizar la matrícula necesitas entregar una copia del DNI/NIE, el resguardo de pago de tasas, una fotografía reciente y el título académico que da acceso al ciclo formativo.",
-        "category": "secretaría",
-        "confidence": 0.94,
+        "answer": "Para la matrícula necesitas presentar: DNI o NIE, fotografía tamaño carnet, título de estudios previos (o certificado de notas), y el formulario de matrícula cumplimentado. Si eres menor de edad, también la autorización de los padres o tutores.",
+        "category": "trámites",
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1885,
+        "prompt_tokens": 493,
+        "completion_tokens": 102,
+        "total_tokens": 595,
+        "request_id": "222ea580-df4e-4aad-843e-ba7005f1b59c"
       }
     },
     "status_code": 200,
-    "latency_ms": 421,
-    "metric_score": 1.0,
+    "latency_ms": 2232,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: secretaría, obtuvo: trámites)"
+    ],
     "notes": "Documentos necesarios para formalizar la matrícula"
   },
   {
@@ -201,30 +205,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "El horario de atención presencial de secretaría es de lunes a viernes de 9:00 a 14:00 horas, y los martes y jueves por la tarde de 16:00 a 18:30 horas.",
-        "category": "atención",
-        "confidence": 0.97,
+        "answer": "El horario de atención de secretaría es de lunes a viernes de 9:00 a 14:00 horas y de 16:00 a 18:00 horas.",
+        "category": "secretaría",
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1510,
+        "prompt_tokens": 492,
+        "completion_tokens": 76,
+        "total_tokens": 568,
+        "request_id": "b087a342-afed-4cc1-b9f6-365fb0bfa900"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
-    "metric_score": 1.0,
+    "latency_ms": 1830,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: atención, obtuvo: secretaría)"
+    ],
     "notes": "Horario de oficina para atención presencial"
   },
   {
@@ -239,30 +245,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "La solicitud de cambio de grupo puede presentarse en secretaría durante los primeros 10 días lectivos de curso, justificando motivos laborales o de salud acreditados.",
-        "category": "normativa",
-        "confidence": 0.89,
+        "answer": "Sí, puedes solicitar un cambio de grupo. Debes presentar la solicitud en Secretaría dentro del plazo establecido (normalmente durante los primeros 15 días del curso). Se evaluará según disponibilidad de plazas y criterios académicos.",
+        "category": "trámites",
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1211,
+        "prompt_tokens": 490,
+        "completion_tokens": 92,
+        "total_tokens": 582,
+        "request_id": "5cc799a0-c082-49b9-a341-7e878120f290"
       }
     },
     "status_code": 200,
-    "latency_ms": 405,
-    "metric_score": 1.0,
+    "latency_ms": 1576,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: normativa, obtuvo: trámites)"
+    ],
     "notes": "Procedimiento para cambio de grupo"
   },
   {
@@ -277,23 +285,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Todos los módulos del plan de estudios son obligatorios para obtener el título, a excepción de las convalidaciones y la exención de FCT por experiencia laboral previa.",
+        "answer": "Los módulos obligatorios de tu ciclo dependen del plan de estudios específico. Te recomiendo consultar el plan de estudios oficial en la plataforma del centro o preguntar en secretaría para obtener la lista completa.",
         "category": "plan_de_estudios",
-        "confidence": 0.91,
+        "confidence": 0.85,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 4535,
+        "prompt_tokens": 491,
+        "completion_tokens": 88,
+        "total_tokens": 579,
+        "request_id": "d34dc117-1098-4446-980c-25bb6bfdd99c"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
+    "latency_ms": 4888,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -315,23 +323,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "No dispongo de información académica o administrativa sobre esa consulta de carácter general. Este asistente está especializado exclusivamente en dudas académicas y normativas de nuestro centro.",
+        "answer": "Lo siento, no tengo información sobre la capital de Francia. Si necesitas ayuda con trámites académicos, normativa o cualquier otra consulta relacionada con nuestro centro educativo, por favor contacta con la secretaría o tu tutor.",
         "category": "derivación",
-        "confidence": 0.15,
+        "confidence": 0.1,
         "error": "fuera_de_dominio"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2822,
+        "prompt_tokens": 488,
+        "completion_tokens": 95,
+        "total_tokens": 583,
+        "request_id": "3aa9dc78-b52c-4189-bc50-3e085cf6fb8e"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
+    "latency_ms": 3184,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -353,23 +361,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "Lamento escuchar eso. Al tratarse de un problema de convivencia personal grave o sensible, he derivado este caso con carácter prioritario al departamento de orientación y tutoría para que se pongan en contacto contigo de inmediato.",
+        "answer": "Lamento que estés pasando por esta situación. Es importante que sepas que no estás solo. Te recomiendo que hables con tu tutor o acudas al departamento de orientación del centro, donde podrán brindarte el apoyo necesario y tomar las medidas adecuadas. Si lo prefieres, también puedes contactar con el equipo directivo para tratar el tema de manera confidencial.",
         "category": "derivación",
-        "confidence": 0.2,
+        "confidence": 0.15,
         "error": "caso_sensible"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1961,
+        "prompt_tokens": 490,
+        "completion_tokens": 125,
+        "total_tokens": 615,
+        "request_id": "2add21fc-eeb2-4690-8f5e-0cdf7f310199"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
+    "latency_ms": 2320,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -391,23 +399,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "El plazo ordinario de matrícula para el próximo curso se abre del 1 al 15 de junio para alumnos de segundo año, y del 20 de junio al 10 de julio para nuevos alumnos.",
+        "answer": "El plazo de matrícula para el próximo curso suele abrirse en el mes de junio. Te recomiendo consultar el calendario académico oficial en la página web del centro para conocer las fechas exactas.",
         "category": "calendario",
-        "confidence": 0.92,
+        "confidence": 0.9,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 9701,
+        "prompt_tokens": 497,
+        "completion_tokens": 84,
+        "total_tokens": 581,
+        "request_id": "d9131cd7-2062-4423-b17b-fa4025f0353a"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
+    "latency_ms": 10079,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -429,23 +437,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Puedes acceder al campus virtual o Teams utilizando las credenciales corporativas (usuario y contraseña) enviadas a tu correo electrónico al matricularte. Si tienes problemas de acceso, puedes restablecer tu contraseña en el portal de autoservicio.",
+        "answer": "Para restablecer tu contraseña de Teams, accede a la página de inicio de sesión de Microsoft 365 y selecciona '¿Olvidó su contraseña?'. Sigue las instrucciones para verificar tu identidad y crear una nueva contraseña. Si tienes problemas, contacta al soporte técnico del centro.",
         "category": "plataformas",
-        "confidence": 0.93,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 3151,
+        "prompt_tokens": 498,
+        "completion_tokens": 113,
+        "total_tokens": 611,
+        "request_id": "a1a9ce38-7f0f-4353-8de5-fddd73469729"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
+    "latency_ms": 3474,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -467,23 +475,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "El carnet de estudiante se puede solicitar de forma virtual desde la secretaría online de la web del centro, o de manera presencial entregando una fotografía reciente de tamaño carnet.",
+        "answer": "Para obtener el carnet de estudiante, debes solicitarlo en Secretaría presentando tu DNI y una foto reciente. El plazo de entrega suele ser de 5 a 10 días hábiles.",
         "category": "secretaría",
-        "confidence": 0.94,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 19834,
+        "prompt_tokens": 490,
+        "completion_tokens": 83,
+        "total_tokens": 573,
+        "request_id": "f2e33e56-34e0-4c0b-a254-0c70803bc595"
       }
     },
     "status_code": 200,
-    "latency_ms": 422,
+    "latency_ms": 20168,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -505,23 +513,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Las prácticas de FCT comienzan oficialmente el 1 de octubre para el primer periodo y el 1 de marzo para el segundo periodo lectivo. Además, se puede solicitar la exención de la FCT si se acredita un año de experiencia laboral afín.",
+        "answer": "Sí, es posible solicitar la exención de las prácticas (FCT) por motivos laborales, siempre que acredites una relación laboral de al menos un año de duración en un puesto relacionado con tu ciclo formativo. Debes presentar la solicitud en secretaría junto con la documentación requerida (contrato de trabajo, vida laboral, etc.) dentro del plazo establecido en el calendario académico.",
         "category": "fct",
-        "confidence": 0.94,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1996,
+        "prompt_tokens": 494,
+        "completion_tokens": 130,
+        "total_tokens": 624,
+        "request_id": "107e5294-62d3-4060-86e7-2e0369ae4827"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
+    "latency_ms": 2363,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -543,30 +551,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Nuestro centro educativo se encuentra ubicado en la Avenida de la Constitución 45, CP 28040 Madrid. Puedes ver el mapa y accesos de transporte público en nuestra página web.",
-        "category": "atención",
-        "confidence": 0.98,
+        "answer": "La dirección del centro educativo es Calle Ejemplo, 123, 28001 Madrid. Puedes consultar más detalles en la página web del centro.",
+        "category": "secretaría",
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2003,
+        "prompt_tokens": 489,
+        "completion_tokens": 69,
+        "total_tokens": 558,
+        "request_id": "54a3d0d8-058f-4236-8ee0-ac3860dca732"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
-    "metric_score": 1.0,
+    "latency_ms": 2357,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: atención, obtuvo: secretaría)"
+    ],
     "notes": "Ubicación física para atención"
   },
   {
@@ -581,23 +591,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "De acuerdo con la normativa vigente, dispones de un máximo de 4 convocatorias ordinarias para superar cada módulo profesional, con la opción de solicitar hasta 2 convocatorias de gracia adicionales.",
+        "answer": "En nuestro centro, cada asignatura tiene un máximo de 4 convocatorias (2 ordinarias y 2 extraordinarias). Si agotas todas, deberás solicitar una convocatoria extraordinaria adicional mediante un trámite específico en secretaría.",
         "category": "normativa",
-        "confidence": 0.92,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2647,
+        "prompt_tokens": 493,
+        "completion_tokens": 91,
+        "total_tokens": 584,
+        "request_id": "690b4586-68ec-49ac-9202-be4548bd3858"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
+    "latency_ms": 2970,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -619,23 +629,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "No dispongo de información académica o administrativa sobre esa consulta de carácter general. Este asistente está especializado exclusivamente en dudas académicas y normativas de nuestro centro.",
+        "answer": "Lo siento, no tengo información sobre recetas de cocina. Para consultas académicas o administrativas, por favor contacta con el centro educativo.",
         "category": "derivación",
-        "confidence": 0.15,
+        "confidence": 0.0,
         "error": "fuera_de_dominio"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1623,
+        "prompt_tokens": 496,
+        "completion_tokens": 77,
+        "total_tokens": 573,
+        "request_id": "e38ba77b-9511-4d80-a2a0-4e8ded8e793d"
       }
     },
     "status_code": 200,
-    "latency_ms": 417,
+    "latency_ms": 1974,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -657,23 +667,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "Lamento escuchar eso. Al tratarse de un problema de convivencia personal grave o sensible, he derivado este caso con carácter prioritario al departamento de orientación y tutoría para que se pongan en contacto contigo de inmediato.",
+        "answer": "Lamento que te sientas así. Es importante que hables con tu tutor o con el departamento de orientación de nuestro centro, ellos pueden brindarte el apoyo que necesitas. No estás solo, busca ayuda.",
         "category": "derivación",
-        "confidence": 0.2,
+        "confidence": 0.25,
         "error": "caso_sensible"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 14093,
+        "prompt_tokens": 493,
+        "completion_tokens": 90,
+        "total_tokens": 583,
+        "request_id": "47eb924f-a61c-4b46-9705-ab856214d560"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
+    "latency_ms": 14413,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -695,30 +705,32 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "La biblioteca del centro abre de lunes a viernes de 8:30 a 21:00 horas ininterrumpidamente durante el periodo lectivo, y de 9:00 a 14:00 horas durante los periodos no lectivos.",
-        "category": "calendario",
+        "answer": "El horario de la biblioteca es de lunes a viernes de 8:00 a 20:00 horas. Los sábados cierra a las 14:00.",
+        "category": "atención",
         "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 19824,
+        "prompt_tokens": 489,
+        "completion_tokens": 76,
+        "total_tokens": 565,
+        "request_id": "79cc101f-10c5-4401-86a8-4f9ad1269a1b"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
-    "metric_score": 1.0,
+    "latency_ms": 20175,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: calendario, obtuvo: atención)"
+    ],
     "notes": "Horario de instalaciones"
   },
   {
@@ -733,23 +745,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Si llegas tarde a una prueba o examen presencial, perderás el derecho a realizarlo a menos que presentes un justificante oficial de fuerza mayor aceptado por la Jefatura de Estudios.",
+        "answer": "Si llegas tarde a un examen de convalidación, debes contactar inmediatamente con el departamento de secretaría o con tu tutor para conocer las opciones disponibles. Generalmente, la normativa permite un margen de hasta 15 minutos de retraso, pero es posible que se requiera justificación documentada. Te recomiendo revisar el calendario académico y la normativa de evaluación del centro.",
         "category": "normativa",
-        "confidence": 0.88,
+        "confidence": 0.85,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2054,
+        "prompt_tokens": 494,
+        "completion_tokens": 124,
+        "total_tokens": 618,
+        "request_id": "2295cbec-d4fd-4310-9162-5ad372596562"
       }
     },
     "status_code": 200,
-    "latency_ms": 422,
+    "latency_ms": 2421,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -770,31 +782,36 @@
     "response": {
       "ok": true,
       "output": {
-        "ok": true,
-        "answer": "El número de teléfono directo del centro es el 91-555-1234. Para contactar con la secretaría del director o concertar una tutoría, por favor solicita hablar con la extensión 102.",
-        "category": "atención",
-        "confidence": 0.9,
-        "error": null
+        "ok": false,
+        "answer": "Lo siento, no tengo acceso a datos personales como el número de teléfono del director. Te recomiendo contactar con la secretaría del centro para obtener esa información.",
+        "category": "derivación",
+        "confidence": 0.15,
+        "error": "fuera_de_dominio"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2872,
+        "prompt_tokens": 490,
+        "completion_tokens": 82,
+        "total_tokens": 572,
+        "request_id": "e56dd5c4-9e5e-4fed-817f-ee3d9daeff25"
       }
     },
     "status_code": 200,
-    "latency_ms": 404,
-    "metric_score": 1.0,
+    "latency_ms": 3227,
+    "metric_score": 0.0,
     "checks": {
       "contract": true,
-      "intent": true,
+      "intent": false,
       "quality": true
     },
-    "errors": [],
+    "errors": [
+      "Categoría incorrecta (esperaba: atención, obtuvo: derivación)",
+      "ok incorrecto (esperaba: True, obtuvo: False)",
+      "error incorrecto (esperaba: None, obtuvo: fuera_de_dominio)",
+      "Confianza fuera de rango para el caso (obtuvo: 0.15)"
+    ],
     "notes": "Contacto institucional"
   },
   {
@@ -809,23 +826,23 @@
       "ok": true,
       "output": {
         "ok": true,
-        "answer": "Para solicitar la anulación de la matrícula debes presentar la solicitud correspondiente en Secretaría con al menos dos meses de antelación a la evaluación final del curso.",
+        "answer": "Para anular la matrícula, debes presentar una solicitud por escrito en Secretaría antes del inicio del curso. Puedes hacerlo presencialmente o a través de la sede electrónica. Recuerda que pueden aplicarse tasas administrativas según el plazo.",
         "category": "trámites",
-        "confidence": 0.94,
+        "confidence": 0.95,
         "error": null
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 3137,
+        "prompt_tokens": 491,
+        "completion_tokens": 95,
+        "total_tokens": 586,
+        "request_id": "654f5079-1b62-4cdf-bf40-91e363c2f8b1"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
+    "latency_ms": 3466,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -847,23 +864,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "No dispongo de información académica o administrativa sobre esa consulta de carácter general. Este asistente está especializado exclusivamente en dudas académicas y normativas de nuestro centro.",
+        "answer": "Lo siento, no tengo información sobre el tiempo meteorológico. Para consultas académicas o administrativas, por favor contacta con el centro educativo.",
         "category": "derivación",
-        "confidence": 0.15,
+        "confidence": 0.1,
         "error": "fuera_de_dominio"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 2237,
+        "prompt_tokens": 490,
+        "completion_tokens": 76,
+        "total_tokens": 566,
+        "request_id": "9511a52d-76a7-4110-a406-bf400ba939bb"
       }
     },
     "status_code": 200,
-    "latency_ms": 403,
+    "latency_ms": 2572,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -885,23 +902,23 @@
       "ok": true,
       "output": {
         "ok": false,
-        "answer": "Lamento escuchar eso. Al tratarse de un problema de convivencia personal grave o sensible, he derivado este caso con carácter prioritario al departamento de orientación y tutoría para que se pongan en contacto contigo de inmediato.",
+        "answer": "Lamento que estés pasando por esta situación. Es importante que sepas que esto no es aceptable. Te recomiendo que contactes de inmediato con tu tutor o con el departamento de orientación del centro para recibir apoyo y asesoramiento. No estás solo en esto.",
         "category": "derivación",
-        "confidence": 0.2,
+        "confidence": 0.25,
         "error": "caso_sensible"
       },
       "meta": {
-        "provider": "mock",
-        "deployment": null,
-        "latency_ms": 0,
-        "prompt_tokens": 0,
-        "completion_tokens": 0,
-        "total_tokens": 0,
-        "request_id": null
+        "provider": "foundry",
+        "deployment": "DeepSeek-V4-Flash",
+        "latency_ms": 1646,
+        "prompt_tokens": 493,
+        "completion_tokens": 103,
+        "total_tokens": 596,
+        "request_id": "6507bece-3f7e-4914-b880-d769e6cd96f1"
       }
     },
     "status_code": 200,
-    "latency_ms": 402,
+    "latency_ms": 2001,
     "metric_score": 1.0,
     "checks": {
       "contract": true,
@@ -929,7 +946,7 @@
       }
     },
     "status_code": 400,
-    "latency_ms": 16,
+    "latency_ms": 5,
     "metric_score": 1.0,
     "checks": {
       "contract": true,

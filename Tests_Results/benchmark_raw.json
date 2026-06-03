@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-06-03 18:33:35",
+  "timestamp": "2026-06-03 19:00:20",
   "provider": "foundry",
   "latency_stats": {
-    "client_p50": 5836.0,
-    "client_p95": 23688.85,
-    "client_min": 1824,
-    "client_max": 25433,
-    "server_p50": 5590.5,
-    "server_p95": 23422.449999999997,
-    "server_min": 1582,
-    "server_max": 25175
+    "client_p50": 3983.0,
+    "client_p95": 4262.9,
+    "client_min": 3672,
+    "client_max": 4294,
+    "server_p50": 3728.0,
+    "server_p95": 4019.6,
+    "server_min": 3404,
+    "server_max": 4052
   },
   "cost_estimation": {
-    "avg_prompt": 491.95454545454544,
-    "avg_completion": 97.04545454545455,
-    "avg_total": 589.0,
-    "cost_per_request": 0.1767,
-    "cost_per_1k": 176.7,
-    "num_samples": 22
+    "avg_prompt": 490.0,
+    "avg_completion": 106.0,
+    "avg_total": 596.0,
+    "cost_per_request": 0.1788,
+    "cost_per_1k": 178.79999999999998,
+    "num_samples": 2
   },
   "reliability": {
     "timeout_ok": true,
@@ -28,250 +28,28 @@
     "rate_msg": "0.3s entre peticiones",
     "errors_ok": true,
     "err_count": 2,
-    "success_ok": false,
-    "success_rate": 0.9166666666666666
+    "success_ok": true,
+    "success_rate": 1.0
   },
   "results": [
     {
       "prompt": "¿Cómo solicito una convalidación?",
       "status": 200,
-      "latency_client_ms": 6805,
-      "latency_server_ms": 6560,
+      "latency_client_ms": 3672,
+      "latency_server_ms": 3404,
       "prompt_tokens": 488,
-      "completion_tokens": 114,
-      "total_tokens": 602,
+      "completion_tokens": 120,
+      "total_tokens": 608,
       "success": true
     },
     {
       "prompt": "¿Cuándo empiezan las prácticas de FCT?",
-      "status": "ERROR",
-      "latency_client_ms": 30016,
-      "latency_server_ms": 0,
-      "prompt_tokens": 0,
-      "completion_tokens": 0,
-      "total_tokens": 0,
-      "success": false,
-      "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)"
-    },
-    {
-      "prompt": "¿Qué ocurre si suspendo el módulo de FCT?",
       "status": 200,
-      "latency_client_ms": 15195,
-      "latency_server_ms": 14947,
-      "prompt_tokens": 493,
-      "completion_tokens": 105,
-      "total_tokens": 598,
-      "success": true
-    },
-    {
-      "prompt": "¿Cómo puedo acceder al campus virtual?",
-      "status": 200,
-      "latency_client_ms": 3658,
-      "latency_server_ms": 3412,
-      "prompt_tokens": 489,
-      "completion_tokens": 87,
-      "total_tokens": 576,
-      "success": true
-    },
-    {
-      "prompt": "¿Qué documentación necesito presentar para la matrícula?",
-      "status": 200,
-      "latency_client_ms": 9837,
-      "latency_server_ms": 9586,
-      "prompt_tokens": 493,
-      "completion_tokens": 101,
-      "total_tokens": 594,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuál es el horario de atención de secretaría?",
-      "status": 200,
-      "latency_client_ms": 12474,
-      "latency_server_ms": 12243,
+      "latency_client_ms": 4294,
+      "latency_server_ms": 4052,
       "prompt_tokens": 492,
-      "completion_tokens": 74,
-      "total_tokens": 566,
-      "success": true
-    },
-    {
-      "prompt": "¿Puedo solicitar un cambio de grupo?",
-      "status": 200,
-      "latency_client_ms": 3176,
-      "latency_server_ms": 2930,
-      "prompt_tokens": 490,
-      "completion_tokens": 89,
-      "total_tokens": 579,
-      "success": true
-    },
-    {
-      "prompt": "¿Qué módulos son obligatorios en el ciclo?",
-      "status": 200,
-      "latency_client_ms": 4867,
-      "latency_server_ms": 4621,
-      "prompt_tokens": 491,
-      "completion_tokens": 91,
-      "total_tokens": 582,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuál es la capital de Francia?",
-      "status": "ERROR",
-      "latency_client_ms": 30004,
-      "latency_server_ms": 0,
-      "prompt_tokens": 0,
-      "completion_tokens": 0,
-      "total_tokens": 0,
-      "success": false,
-      "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=30)"
-    },
-    {
-      "prompt": "Tengo un problema personal muy grave con un compañero",
-      "status": 200,
-      "latency_client_ms": 2812,
-      "latency_server_ms": 2575,
-      "prompt_tokens": 490,
-      "completion_tokens": 124,
-      "total_tokens": 614,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuándo se abre el plazo de matrícula para el año que viene?",
-      "status": 200,
-      "latency_client_ms": 13983,
-      "latency_server_ms": 13748,
-      "prompt_tokens": 497,
-      "completion_tokens": 83,
-      "total_tokens": 580,
-      "success": true
-    },
-    {
-      "prompt": "No puedo entrar a Teams, ¿cómo restablezco mi contraseña?",
-      "status": 200,
-      "latency_client_ms": 18841,
-      "latency_server_ms": 18605,
-      "prompt_tokens": 498,
-      "completion_tokens": 93,
-      "total_tokens": 591,
-      "success": true
-    },
-    {
-      "prompt": "¿Cómo consigo el carnet de estudiante?",
-      "status": 200,
-      "latency_client_ms": 10811,
-      "latency_server_ms": 10551,
-      "prompt_tokens": 490,
-      "completion_tokens": 83,
-      "total_tokens": 573,
-      "success": true
-    },
-    {
-      "prompt": "¿Puedo pedir exención de las prácticas por trabajar?",
-      "status": 200,
-      "latency_client_ms": 14692,
-      "latency_server_ms": 14434,
-      "prompt_tokens": 494,
-      "completion_tokens": 140,
-      "total_tokens": 634,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuál es la dirección del centro educativo?",
-      "status": 200,
-      "latency_client_ms": 4336,
-      "latency_server_ms": 4102,
-      "prompt_tokens": 489,
-      "completion_tokens": 71,
-      "total_tokens": 560,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuántas convocatorias tengo por asignatura?",
-      "status": 200,
-      "latency_client_ms": 1899,
-      "latency_server_ms": 1633,
-      "prompt_tokens": 493,
-      "completion_tokens": 86,
-      "total_tokens": 579,
-      "success": true
-    },
-    {
-      "prompt": "¿Cuál es la mejor receta para hacer una tortilla de patatas?",
-      "status": 200,
-      "latency_client_ms": 4621,
-      "latency_server_ms": 4380,
-      "prompt_tokens": 496,
       "completion_tokens": 92,
-      "total_tokens": 588,
-      "success": true
-    },
-    {
-      "prompt": "Me siento muy deprimido y no quiero seguir estudiando",
-      "status": 200,
-      "latency_client_ms": 25433,
-      "latency_server_ms": 25175,
-      "prompt_tokens": 493,
-      "completion_tokens": 95,
-      "total_tokens": 588,
-      "success": true
-    },
-    {
-      "prompt": "¿A qué hora cierra la biblioteca?",
-      "status": 200,
-      "latency_client_ms": 1824,
-      "latency_server_ms": 1582,
-      "prompt_tokens": 489,
-      "completion_tokens": 70,
-      "total_tokens": 559,
-      "success": true
-    },
-    {
-      "prompt": "¿Qué pasa si llego tarde a un examen de convalidación?",
-      "status": 200,
-      "latency_client_ms": 14446,
-      "latency_server_ms": 14213,
-      "prompt_tokens": 494,
-      "completion_tokens": 150,
-      "total_tokens": 644,
-      "success": true
-    },
-    {
-      "prompt": "Quiero saber el número de teléfono del director",
-      "status": 200,
-      "latency_client_ms": 3508,
-      "latency_server_ms": 3227,
-      "prompt_tokens": 490,
-      "completion_tokens": 74,
-      "total_tokens": 564,
-      "success": true
-    },
-    {
-      "prompt": "¿Cómo hago para anular la matrícula?",
-      "status": 200,
-      "latency_client_ms": 23944,
-      "latency_server_ms": 23676,
-      "prompt_tokens": 491,
-      "completion_tokens": 109,
-      "total_tokens": 600,
-      "success": true
-    },
-    {
-      "prompt": "¿Qué tiempo va a hacer mañana en Madrid?",
-      "status": 200,
-      "latency_client_ms": 1871,
-      "latency_server_ms": 1631,
-      "prompt_tokens": 490,
-      "completion_tokens": 76,
-      "total_tokens": 566,
-      "success": true
-    },
-    {
-      "prompt": "Un profesor me está amenazando con suspenderme si no pago",
-      "status": 200,
-      "latency_client_ms": 3583,
-      "latency_server_ms": 3325,
-      "prompt_tokens": 493,
-      "completion_tokens": 128,
-      "total_tokens": 621,
+      "total_tokens": 584,
       "success": true
     }
   ]

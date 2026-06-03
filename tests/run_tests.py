@@ -209,8 +209,8 @@ def main():
         json.dump(results, f, indent=2, ensure_ascii=False)
     print(f"[+] Evidencia JSON guardada en: Tests_Results/V13_eval_evidence.json")
 
-    # 5. Guardar reporte CSV (calidad_eval_results.csv)
-    evidence_csv_path = os.path.join(RESULTS_DIR, "calidad_eval_results.csv")
+    # 5. Guardar reporte CSV (calidad_eval_results_nuevo.csv)
+    evidence_csv_path = os.path.join(RESULTS_DIR, "calidad_eval_results_nuevo.csv")
     with open(evidence_csv_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["id", "input", "expected_category", "actual_category", "status_code", "latency_ms", "score", "passed", "errors"])

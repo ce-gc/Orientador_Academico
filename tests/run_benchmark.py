@@ -423,6 +423,11 @@ def save_results(report_md, raw_json):
 def main():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
 
+    # Optional limit from command line args
+    limit = None
+    if len(sys.argv) > 1 and sys.argv[1].isdigit():
+        limit = int(sys.argv[1])
+
     print_banner("BENCHMARK — ORIENTADOR ACADÉMICO")
 
     # 1. Health check
@@ -432,6 +437,8 @@ def main():
 
     # 2. Cargar casos
     cases = load_test_cases()
+    if limit is not None:
+        cases = cases[:limit]
 
     # 3. Cabecera del informe
     print(f"  Fecha:     {timestamp}")
