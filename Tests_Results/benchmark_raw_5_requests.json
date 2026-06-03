@@ -1,0 +1,86 @@
+{
+  "timestamp": "2026-06-03 19:22:50",
+  "provider": "foundry",
+  "latency_stats": {
+    "client_p50": 2913.0,
+    "client_p95": 5686.199999999999,
+    "client_min": 2597,
+    "client_max": 6266,
+    "server_p50": 2652.0,
+    "server_p95": 5439.799999999999,
+    "server_min": 2350,
+    "server_max": 6021
+  },
+  "cost_estimation": {
+    "avg_prompt": 491.0,
+    "avg_completion": 99.2,
+    "avg_total": 590.2,
+    "cost_per_request": 0.17706,
+    "cost_per_1k": 177.06,
+    "num_samples": 5
+  },
+  "reliability": {
+    "timeout_ok": true,
+    "timeout_msg": "30s (cliente OpenAI SDK)",
+    "retries_ok": true,
+    "retries_msg": "3 automáticos (429/5xx)",
+    "rate_limit_ok": true,
+    "rate_msg": "0.3s entre peticiones",
+    "errors_ok": true,
+    "err_count": 2,
+    "success_ok": true,
+    "success_rate": 1.0
+  },
+  "results": [
+    {
+      "prompt": "¿Cómo solicito una convalidación?",
+      "status": 200,
+      "latency_client_ms": 2913,
+      "latency_server_ms": 2651,
+      "prompt_tokens": 488,
+      "completion_tokens": 116,
+      "total_tokens": 604,
+      "success": true
+    },
+    {
+      "prompt": "¿Cuándo empiezan las prácticas de FCT?",
+      "status": 200,
+      "latency_client_ms": 6266,
+      "latency_server_ms": 6021,
+      "prompt_tokens": 492,
+      "completion_tokens": 100,
+      "total_tokens": 592,
+      "success": true
+    },
+    {
+      "prompt": "¿Qué ocurre si suspendo el módulo de FCT?",
+      "status": 200,
+      "latency_client_ms": 2597,
+      "latency_server_ms": 2350,
+      "prompt_tokens": 493,
+      "completion_tokens": 92,
+      "total_tokens": 585,
+      "success": true
+    },
+    {
+      "prompt": "¿Cómo puedo acceder al campus virtual?",
+      "status": 200,
+      "latency_client_ms": 2894,
+      "latency_server_ms": 2652,
+      "prompt_tokens": 489,
+      "completion_tokens": 83,
+      "total_tokens": 572,
+      "success": true
+    },
+    {
+      "prompt": "¿Qué documentación necesito presentar para la matrícula?",
+      "status": 200,
+      "latency_client_ms": 3367,
+      "latency_server_ms": 3115,
+      "prompt_tokens": 493,
+      "completion_tokens": 105,
+      "total_tokens": 598,
+      "success": true
+    }
+  ]
+}

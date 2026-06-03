@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-06-03 19:22:41",
+  "provider": "foundry",
+  "latency_stats": {
+    "client_p50": 3064.5,
+    "client_p95": 3790.35,
+    "client_min": 2258,
+    "client_max": 3871,
+    "server_p50": 2802.0,
+    "server_p95": 3507.6,
+    "server_min": 2018,
+    "server_max": 3586
+  },
+  "cost_estimation": {
+    "avg_prompt": 490.0,
+    "avg_completion": 101.5,
+    "avg_total": 591.5,
+    "cost_per_request": 0.17745,
+    "cost_per_1k": 177.45,
+    "num_samples": 2
+  },
+  "reliability": {
+    "timeout_ok": true,
+    "timeout_msg": "30s (cliente OpenAI SDK)",
+    "retries_ok": true,
+    "retries_msg": "3 automáticos (429/5xx)",
+    "rate_limit_ok": true,
+    "rate_msg": "0.3s entre peticiones",
+    "errors_ok": true,
+    "err_count": 2,
+    "success_ok": true,
+    "success_rate": 1.0
+  },
+  "results": [
+    {
+      "prompt": "¿Cómo solicito una convalidación?",
+      "status": 200,
+      "latency_client_ms": 3871,
+      "latency_server_ms": 3586,
+      "prompt_tokens": 488,
+      "completion_tokens": 115,
+      "total_tokens": 603,
+      "success": true
+    },
+    {
+      "prompt": "¿Cuándo empiezan las prácticas de FCT?",
+      "status": 200,
+      "latency_client_ms": 2258,
+      "latency_server_ms": 2018,
+      "prompt_tokens": 492,
+      "completion_tokens": 88,
+      "total_tokens": 580,
+      "success": true
+    }
+  ]
+}
