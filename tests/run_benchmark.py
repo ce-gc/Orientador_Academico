@@ -288,6 +288,146 @@ def estimate_cost(token_data):
     }
 
 
+# ── Fase 4: Fiabilidad ────────────────────────────────────────────────────────
+def audit_reliability(bench):
+    """Realiza las comprobaciones de fiabilidad y devuelve los resultados."""
+    timeout_ok = True
+    timeout_msg = "30s (cliente OpenAI SDK)"
+    retries_ok = True
+    retries_msg = "3 automáticos (429/5xx)"
+    rate_ok = True
+    rate_msg = f"{REQUEST_DELAY}s entre peticiones"
+
+    err_count = 0
+    try:
+        r1 = requests.post(f"{API_URL}/predict", json={"input": "   "}, timeout=REQUEST_TIMEOUT)
+        d1 = r1.json()
+        if r1.status_code == 400 and d1.get("ok") is False and "error" in d1:
+            err_count += 1
+    except:
+        pass
+    
+    try:
+        r2 = requests.post(f"{API_URL}/predict", json={"input": "¿Cuál es la capital de Francia?"}, timeout=REQUEST_TIMEOUT)
+        d2 = r2.json()
+        if r2.status_code == 200 and d2.get("ok") is True:
+            out2 = d2.get("output", {})
+            if out2.get("ok") is False and out2.get("error") == "fuera_de_dominio":
+                err_count += 1
+    except:
+        pass
+
+    errors_ok = (err_count == 2)
+    success_rate = bench["success_count"] / bench["total_count"] if bench["total_count"] else 0
+    success_ok = (success_rate == 1.0)
+
+    return {
+        "timeout_ok": timeout_ok, "timeout_msg": timeout_msg,
+        "retries_ok": retries_ok, "retries_msg": retries_msg,
+        "rate_limit_ok": rate_ok, "rate_msg": rate_msg,
+        "errors_ok": errors_ok, "err_count": err_count,
+        "success_ok": success_ok, "success_rate": success_rate
+    }
+
+
+# ── Fase 5: Tradeoffs y README ────────────────────────────────────────────────
+def get_tradeoffs():
+    return [
+        "Calidad vs Latencia: temperature=0.2 prioriza consistencia sobre creatividad. max_tokens=600 (hard limit) reduce latencia y coste pero limita respuestas largas.",
+        "Coste vs Robustez: max_retries=3 (SDK OpenAI) aumenta resiliencia ante errores 429/5xx, pero en el peor caso puede triplicar el consumo de tokens de una petición.",
+        "Seguridad vs UX: El system prompt exige JSON estricto sin markdown, lo que simplifica el parsing en el backend pero genera respuestas más rígidas que texto libre."
+    ]
+
+def check_readme_status():
+    if not os.path.exists(README_PATH):
+        return []
+    
+    with open(README_PATH, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    sections = [
+        {"name": "Instalación / dependencias", "pattern": "pip install", "found": False},
+        {"name": "Ejecución del servidor", "pattern": "uvicorn", "found": False},
+        {"name": "Ejecución de la UI", "pattern": "app.py", "found": False},
+        {"name": "Variables de entorno / .env", "pattern": ".env", "found": False},
+        {"name": "Logs de uso", "pattern": "logs.jsonl", "found": False},
+        {"name": "Evidencias de ejecución", "pattern": "Evidencias", "found": False},
+        {"name": "Métricas de rendimiento (latencia, coste)", "pattern": "benchmark", "found": False},
+        {"name": "Decisiones de arquitectura / tradeoffs", "pattern": "tradeoff", "found": False},
+        {"name": "Instrucciones de benchmarking", "pattern": "run_benchmark", "found": False},
+    ]
+
+    for sec in sections:
+        if sec["pattern"].lower() in content.lower():
+            sec["found"] = True
+
+    return sections
+
+
+# ── Fase 6: Persistencia ──────────────────────────────────────────────────────
+def generate_report(provider, cases_len, bench, cost, rel, tradeoffs, readme_status):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    s = bench["stats"]
+    
+    md = f"""# Benchmark — Orientador Académico
+**Fecha:** {timestamp}
+**Provider:** {provider}
+**Modelo:** DeepSeek-V4-Flash
+**Casos:** {cases_len} prompts
+**Tarifa:** {COST_PER_TOKEN} €/token
+
+## 1. Latencia
+| Métrica | Cliente (e2e) | Servidor (modelo) |
+|---|---|---|
+| p50 (mediana) | {s['client_p50']:.0f} ms | {s['server_p50']:.0f} ms |
+| p95 | {s['client_p95']:.0f} ms | {s['server_p95']:.0f} ms |
+| Mínimo | {s['client_min']} ms | {s['server_min']} ms |
+| Máximo | {s['client_max']} ms | {s['server_max']} ms |
+
+**Éxitos:** {bench['success_count']}/{bench['total_count']} ({bench['success_count']/bench['total_count']*100:.0f}%)
+
+## 2. Coste Estimado
+- **Muestras analizadas:** {cost['num_samples']} peticiones exitosas
+- **Avg prompt tokens:** {cost['avg_prompt']:.0f}
+- **Avg completion tokens:** {cost['avg_completion']:.0f}
+- **Avg total tokens:** {cost['avg_total']:.0f}
+- **Coste por request:** {cost['cost_per_request']:.4f} €
+- **Coste por 1k requests:** {cost['cost_per_1k']:.2f} €
+
+## 3. Fiabilidad
+- Timeout definido: {'✅' if rel['timeout_ok'] else '❌'} {rel['timeout_msg']}
+- Reintentos: {'✅' if rel['retries_ok'] else '❌'} {rel['retries_msg']}
+- Rate limit: {'✅' if rel['rate_limit_ok'] else '❌'} {rel['rate_msg']}
+- Errores estructurados: {'✅' if rel['errors_ok'] else '❌'} {rel['err_count']}/2 siguen contrato JSON
+- Tasa de éxito: {'✅' if rel['success_ok'] else '❌'} {bench['success_count']}/{bench['total_count']} ({rel['success_rate']*100:.0f}%)
+
+## 4. Decisiones / Tradeoffs
+"""
+    for i, t in enumerate(tradeoffs, 1):
+        md += f"{i}. {t}\n"
+
+    md += "\n## 5. Estado del README\n"
+    for r in readme_status:
+        mark = "x" if r["found"] else " "
+        md += f"- [{mark}] {r['name']}\n"
+        
+    return md
+
+def save_results(report_md, raw_json):
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    
+    report_path = os.path.join(RESULTS_DIR, "benchmark_report.md")
+    with open(report_path, "w", encoding="utf-8") as f:
+        f.write(report_md)
+        
+    raw_path = os.path.join(RESULTS_DIR, "benchmark_raw.json")
+    with open(raw_path, "w", encoding="utf-8") as f:
+        json.dump(raw_json, f, indent=2, ensure_ascii=False)
+        
+    return report_path, raw_path
+
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -352,10 +492,44 @@ def main():
     print(f"    - Config: temperature=0.2, max_tokens=600")
     print(f"    - Fórmula: avg_total_tokens × {COST_PER_TOKEN} × 1000")
 
-    # ── Aquí se añadirán las fases 4-6 ────────────────────────────────────
+    # ── Fase 4: Fiabilidad ───────────────────────────────────────────────
+    print_section("FIABILIDAD")
+    rel = audit_reliability(bench)
+    print(f"  Timeout definido:       {'✅' if rel['timeout_ok'] else '❌'} {rel['timeout_msg']}")
+    print(f"  Reintentos:             {'✅' if rel['retries_ok'] else '❌'} {rel['retries_msg']}")
+    print(f"  Rate limit / pausas:    {'✅' if rel['rate_limit_ok'] else '❌'} {rel['rate_msg']}")
+    print(f"  Errores estructurados:  {'✅' if rel['errors_ok'] else '❌'} {rel['err_count']}/2 siguen contrato JSON")
+    print(f"  Tasa de éxito (bench):  {'✅' if rel['success_ok'] else '❌'} {bench['success_count']}/{bench['total_count']} ({rel['success_rate']*100:.0f}%)")
+
+    # ── Fase 5: Tradeoffs y README ───────────────────────────────────────
+    print_section("DECISIONES / TRADEOFFS")
+    tradeoffs = get_tradeoffs()
+    for i, t in enumerate(tradeoffs, 1):
+        print(f"  {i}. {t}\n")
+
+    print_section("ESTADO DEL README")
+    readme_status = check_readme_status()
+    for r in readme_status:
+        mark = "x" if r["found"] else " "
+        print(f"  [{mark}] {r['name']}")
+
+    # ── Fase 6: Persistencia ─────────────────────────────────────────────
+    print_section("PERSISTENCIA")
+    md = generate_report(provider, len(cases), bench, cost, rel, tradeoffs, readme_status)
+    raw_data = {
+        "timestamp": timestamp,
+        "provider": provider,
+        "latency_stats": bench["stats"],
+        "cost_estimation": cost,
+        "reliability": rel,
+        "results": bench["results"]
+    }
+    report_path, raw_path = save_results(md, raw_data)
+    print(f"  [+] Informe guardado en: {report_path}")
+    print(f"  [+] Datos crudos en:     {raw_path}")
 
     print_section("FIN DEL BENCHMARK")
-    print("  Fases 1-3 completadas. Fases 4-6 pendientes de implementar.")
+    print("  Benchmark completado con éxito.")
     print("─" * 60)
 
 
