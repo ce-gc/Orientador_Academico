@@ -206,7 +206,10 @@ def predict(text: str, options: dict | None = None) -> dict:
         base_url=base_url,
         api_key=api_key,
         default_headers={"api-key": api_key},   # Foundry requiere ambos
+        timeout=30.0,                           # Timeout definido (30s)
+        max_retries=3,                          # Reintentos (hasta 3 veces) en errores 429/5xx o conexión
     )
+
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
