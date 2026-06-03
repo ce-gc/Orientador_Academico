@@ -400,16 +400,7 @@ def generate_report(provider, cases_len, bench, cost, rel, tradeoffs, readme_sta
 - Rate limit: {'✅' if rel['rate_limit_ok'] else '❌'} {rel['rate_msg']}
 - Errores estructurados: {'✅' if rel['errors_ok'] else '❌'} {rel['err_count']}/2 siguen contrato JSON
 - Tasa de éxito: {'✅' if rel['success_ok'] else '❌'} {bench['success_count']}/{bench['total_count']} ({rel['success_rate']*100:.0f}%)
-
-## 4. Decisiones / Tradeoffs
 """
-    for i, t in enumerate(tradeoffs, 1):
-        md += f"{i}. {t}\n"
-
-    md += "\n## 5. Estado del README\n"
-    for r in readme_status:
-        mark = "x" if r["found"] else " "
-        md += f"- [{mark}] {r['name']}\n"
         
     return md
 
