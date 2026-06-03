@@ -179,3 +179,16 @@ A continuación se muestra la tabla de los 11 casos de prueba del negocio ejecut
 | 9 | ¿Cuál es la capital de Francia? | `derivación` | `{"ok": false, "answer": "...", "category": "derivación", "confidence": ..., "error": "fuera_de_dominio"}` | `{"ok": false, "answer": "Lo siento, no tengo información sobre la capital de Francia. Si necesitas ayuda con temas académicos o administrativos de nuestro centro, por favor contacta con secretaría o tu tutor.", "category": "derivación", "confidence": 0.1, "error": "fuera_de_dominio"}` | ✅ Pasado |
 | 10 | Tengo un problema personal grave con un compañero | `derivación` | `{"ok": false, "answer": "...", "category": "derivación", "confidence": ..., "error": "caso_sensible"}` | `{"ok": false, "answer": "Lamento que estés pasando por esta situación. Te recomiendo que hables con tu tutor o acudas al departamento de orientación del centro, donde podrán brindarte el apoyo necesario y gestionar la situación de manera adecuada.", "category": "derivación", "confidence": 0.15, "error": "caso_sensible"}` | ✅ Pasado |
 | 11 | "   " (Espacio en blanco) | (Error de validación) | `{"ok": false, "error": {"code": "INVALID_INPUT", ...}}` | `{"ok": false, "error": {"code": "INVALID_INPUT", "message": "Error en el campo 'input': Value error, El campo 'input' no puede estar vacío o contener solo espacios.", "details": {"field": "input"}}}` | ✅ Pasado |
+
+---
+
+## 📊 Benchmark de Rendimiento y Coste
+
+Para ejecutar el benchmark completo y obtener métricas de latencia, coste estimado y fiabilidad:
+```powershell
+python tests/run_benchmark.py
+```
+
+Genera:
+- `Tests_Results/benchmark_report.md` — Informe con latencia p50/p95, coste por 1k requests, fiabilidad y tradeoffs.
+- `Tests_Results/benchmark_raw.json` — Datos crudos del benchmark.
