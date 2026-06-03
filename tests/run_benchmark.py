@@ -101,6 +101,158 @@ def load_test_cases():
     return cases
 
 
+# ── Fase 2: Latencia ─────────────────────────────────────────────────────────
+def send_single_request(prompt):
+    """
+    Envía una petición POST /predict y mide latencia end-to-end.
+
+    Returns:
+        dict con: prompt, status, latency_client_ms, latency_server_ms,
+                  prompt_tokens, completion_tokens, total_tokens, success
+    """
+    t0 = time.time()
+    try:
+        r = requests.post(
+            f"{API_URL}/predict",
+            json={"input": prompt},
+            timeout=REQUEST_TIMEOUT,
+        )
+        latency_client = int((time.time() - t0) * 1000)
+        data = r.json()
+
+        if r.status_code == 200 and data.get("ok"):
+            meta = data.get("meta", {})
+            return {
+                "prompt": prompt,
+                "status": r.status_code,
+                "latency_client_ms": latency_client,
+                "latency_server_ms": meta.get("latency_ms", 0),
+                "prompt_tokens": meta.get("prompt_tokens", 0),
+                "completion_tokens": meta.get("completion_tokens", 0),
+                "total_tokens": meta.get("total_tokens", 0),
+                "success": True,
+            }
+        else:
+            return {
+                "prompt": prompt,
+                "status": r.status_code,
+                "latency_client_ms": latency_client,
+                "latency_server_ms": 0,
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "total_tokens": 0,
+                "success": False,
+                "error": f"HTTP {r.status_code}: {data}",
+            }
+    except Exception as e:
+        latency_client = int((time.time() - t0) * 1000)
+        return {
+            "prompt": prompt,
+            "status": "ERROR",
+            "latency_client_ms": latency_client,
+            "latency_server_ms": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "success": False,
+            "error": str(e),
+        }
+
+
+def calc_percentiles(values, percentiles):
+    """
+    Calcula los percentiles indicados de una lista de valores numéricos.
+
+    Args:
+        values: lista de números (debe tener al menos 1 elemento)
+        percentiles: lista de percentiles a calcular (ej. [50, 95])
+    Returns:
+        dict {percentil: valor}
+    """
+    if not values:
+        return {p: 0 for p in percentiles}
+
+    sorted_vals = sorted(values)
+    n = len(sorted_vals)
+    result = {}
+    for p in percentiles:
+        idx = (n - 1) * (p / 100.0)
+        low = int(idx)
+        high = min(low + 1, n - 1)
+        frac = idx - low
+        result[p] = sorted_vals[low] + frac * (sorted_vals[high] - sorted_vals[low])
+    return result
+
+
+def run_latency_benchmark(cases):
+    """
+    Ejecuta los casos secuencialmente y recoge métricas de latencia y tokens.
+
+    Returns:
+        dict con:
+          results: lista de dicts por petición
+          stats: dict con p50, p95, min, max para cliente y servidor
+          token_data: lista de dicts {prompt_tokens, completion_tokens, total_tokens}
+          success_count: número de peticiones exitosas
+          total_count: número total de peticiones
+    """
+    results = []
+    total = len(cases)
+
+    for i, case in enumerate(cases, 1):
+        prompt = case["input"]
+        short = prompt[:45] + "..." if len(prompt) > 45 else prompt
+        print(f"  [{i:2d}/{total}] {short}", end="", flush=True)
+
+        res = send_single_request(prompt)
+        results.append(res)
+
+        if res["success"]:
+            print(f"  → {res['latency_client_ms']} ms (ok)")
+        else:
+            print(f"  → {res['latency_client_ms']} ms (FAIL)")
+
+        # Pausa entre peticiones para no sobrecargar / rate limit
+        if i < total:
+            time.sleep(REQUEST_DELAY)
+
+    # Separar datos exitosos
+    ok_results = [r for r in results if r["success"]]
+    client_lats = [r["latency_client_ms"] for r in ok_results]
+    server_lats = [r["latency_server_ms"] for r in ok_results]
+    token_data = [
+        {
+            "prompt_tokens": r["prompt_tokens"],
+            "completion_tokens": r["completion_tokens"],
+            "total_tokens": r["total_tokens"],
+        }
+        for r in ok_results
+    ]
+
+    # Calcular percentiles
+    client_pcts = calc_percentiles(client_lats, [50, 95])
+    server_pcts = calc_percentiles(server_lats, [50, 95])
+
+    stats = {
+        "client_p50": client_pcts[50],
+        "client_p95": client_pcts[95],
+        "client_min": min(client_lats) if client_lats else 0,
+        "client_max": max(client_lats) if client_lats else 0,
+        "server_p50": server_pcts[50],
+        "server_p95": server_pcts[95],
+        "server_min": min(server_lats) if server_lats else 0,
+        "server_max": max(server_lats) if server_lats else 0,
+    }
+
+    return {
+        "results": results,
+        "stats": stats,
+        "token_data": token_data,
+        "success_count": len(ok_results),
+        "total_count": total,
+    }
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -131,10 +283,25 @@ def main():
 
     print("═" * 60)
 
-    # ── Aquí se añadirán las fases 2-6 ────────────────────────────────────
+    # ── Fase 2: Latencia ──────────────────────────────────────────────────
+    print_section(f"LATENCIA ({len(cases)} peticiones, DeepSeek-V4-Flash / {provider})")
+    bench = run_latency_benchmark(cases)
+    s = bench["stats"]
+
+    print()
+    print(f"  {'':16s} {'Cliente (e2e)':>16s}   {'Servidor (modelo)':>18s}")
+    print(f"  {'─' * 54}")
+    print(f"  {'p50 (mediana)':16s} {s['client_p50']:13.0f} ms   {s['server_p50']:15.0f} ms")
+    print(f"  {'p95':16s} {s['client_p95']:13.0f} ms   {s['server_p95']:15.0f} ms")
+    print(f"  {'Mínimo':16s} {s['client_min']:13d} ms   {s['server_min']:15d} ms")
+    print(f"  {'Máximo':16s} {s['client_max']:13d} ms   {s['server_max']:15d} ms")
+    print(f"  {'─' * 54}")
+    print(f"  Éxitos: {bench['success_count']}/{bench['total_count']} ({bench['success_count']/bench['total_count']*100:.0f}%)")
+
+    # ── Aquí se añadirán las fases 3-6 ────────────────────────────────────
 
     print_section("FIN DEL BENCHMARK")
-    print("  Fase 1 completada. Fases 2-6 pendientes de implementar.")
+    print("  Fases 1-2 completadas. Fases 3-6 pendientes de implementar.")
     print("─" * 60)
 
 
